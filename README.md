@@ -6,7 +6,7 @@ Study space where users can drag and drop different widgets to a virtual desktop
 
 As an <actor> I want <some action> so that I get <some value>
 
-- As a student, 
+- As a student, I want an app that I can customise the look off, down to the placement of every single widget so that I can feel like the study space belongs to me.
 
 - As a student, I want to use the Pomodoro technique when studying so I want a timer to automatically start stop my study sessions while also telling when to take a break so that I can have effective study sessions
 
@@ -18,6 +18,6 @@ As an <actor> I want <some action> so that I get <some value>
 
 - As a student, I want to be able to customise the background of my desktop
 
-- todo list
+- As a student, I want to keep a todo list so that I can track all my reminders and assignments
 
 - 
