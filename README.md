@@ -20,4 +20,6 @@ As an <actor> I want <some action> so that I get <some value>
 
 - As a student, I want to keep a todo list so that I can track all my reminders and assignments
 
-- 
+- As a student, I want to keep track of the weather so that I can know what to wear and what to expect when I go out
+
+- As a student, I want a quick, clean and easy to use calculator so that I can do some quick calculation when I'm doing my homework
