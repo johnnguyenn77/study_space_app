@@ -1,35 +1,9 @@
 from tkinter import *
-import json
 from datetime import datetime
 import pip._vendor.requests as requests
-import time
-from stopwatch import stopwatch
 
-#Initialize Window
+city_value = StringVar()
 
-root = Tk()
-root.configure(bg='#222222')
-
-#title of our window
-root.title("Your study spacce")
-
-def make_draggable(widget):
-    widget.bind("<Button-1>", on_drag_start)
-    widget.bind("<B1-Motion>", on_drag_motion)
-
-def on_drag_start(event):
-    widget = event.widget
-    widget._drag_start_x = event.x
-    widget._drag_start_y = event.y
-
-def on_drag_motion(event):
-    widget = event.widget
-    x = widget.winfo_x() - widget._drag_start_x + event.x
-    y = widget.winfo_y() - widget._drag_start_y + event.y
-    widget.place(x=x, y=y) 
- 
-# ----------------------Functions to fetch and display weather info
- 
 def time_format_for_location(utc_with_tz):
     local_time = datetime.utcfromtimestamp(utc_with_tz)
     return local_time.time()
@@ -84,41 +58,3 @@ def showWeather():
  
  
     tfield.insert(INSERT, weather)   #to insert or send value in our Text Field to display output
- 
- 
- 
-#Frontend part of code - Interface
-
-city_value = StringVar()
-
-weather_frame = Frame(root, bd = 4, bg = "white")
-weather_frame.place(x=10, y=10)
-make_draggable(weather_frame)
-
-
-stopwatch_frame = Frame(root, bd = 4, bg = 'white')
-stopwatch_frame.place(x=10, y=20)
-make_draggable(stopwatch_frame)
-
-a = stopwatch(root)
-
-font_tuple_city_head = ("Courier New", 12, "bold")
-font_tuple_inp_city = ("Courier New", 14, "bold")
-
-city_head= Label(weather_frame, text = 'Enter City Name', font = font_tuple_city_head).pack(pady=10) #to generate label heading
-
-inp_city = Entry(weather_frame, textvariable = city_value,  width = 24, font= font_tuple_inp_city).pack()
-
-Button(weather_frame, command = showWeather, text = "Check Weather", font="Arial 10", bg='lightblue', fg='black', activebackground="teal", padx=5, pady=5 ).pack(pady= 20)
- 
-#to show output
- 
-weather_now = Label(weather_frame, text = "The Weather is:", font = 'arial 12 bold').pack(pady=10)
- 
-tfield = Text(weather_frame, width=46, height=10)
-tfield.pack()
-
-notes = Text(stopwatch_frame)
-notes.pack()
-
-root.mainloop()
