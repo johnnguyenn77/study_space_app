@@ -1,8 +1,10 @@
 from tkinter import *
 import sys
 import time
+from make_draggable import make_draggable
+
 global count
-count =0
+count = 0
 class stopwatch():
     def reset(self):
         global count
@@ -11,15 +13,12 @@ class stopwatch():
         
     def start(self):
         global count
-        count=0
+        count = 0
         self.timer()   
         
     def stop(self):
         global count
         count=1
-        
-    def close(self):
-        self.frame_name.destroy()
         
     def timer(self):
         global count
@@ -53,23 +52,28 @@ class stopwatch():
             self.d=h+":"+m+":"+s           
             self.t.set(self.d)
             if(count==0):
-                self.frame_name.after(1000,self.timer)     
+                self.frame.after(1000,self.timer)     
                 
-    def __init__(self, root_name):
-        self.frame_name = Frame(root_name, bd = 4, bg = 'white')
-        self.frame_name.place(x=10, y=20)
+    def __init__(self, root):
+        self.frame = Frame(root, bd = 4, bg = 'white')
+        make_draggable(self.frame)
+        self.frame.place(x=10, y=20)
         self.t = StringVar()
         self.t.set("00:00:00")
-        self.lb = Label(self.frame_name,textvariable=self.t,font=("Times 40 bold"),bg="white")
-        self.bt1 = Button(self.frame_name,text="Start",command=self.start,font=("Times 12 bold"),bg=("green"))
-        self.bt2 = Button(self.frame_name,text="Stop",command=self.stop,font=("Times 12 bold"),bg=("red"))
-        self.bt3 = Button(self.frame_name,text="Reset",command=self.reset,font=("Times 12 bold"),bg=("orange"))
-        self.lb.place(x=160,y=10)
-        self.bt1.place(x=120,y=100)
-        self.bt2.place(x=220,y=100)
-        self.bt3.place(x=320,y=100)
-        self.label = Label(self.frame_name,text="",font=("Times 40 bold"))
-        self.frame_name.pack()
         
+        lb = Label(self.frame, textvariable = self.t, font=("Times 40 bold"), bg = "white").pack()
         
-#a = stopwatch()      
+        buttonframe = Frame(self.frame)
+        buttonframe.pack()
+    
+        bt1 = Button(buttonframe, text="Start", width=5,height=1, command= self.start, font=("Times 12 bold"), bg = ("white")).grid(row=0, column=0)#.pack(side = LEFT)
+        bt2 = Button(buttonframe, text="Stop", width=5,height=1, command= self.stop, font=("Times 12 bold"), bg = ("white")).grid(row=0, column = 1)#pack(side = LEFT)
+        bt3 = Button(buttonframe, text="Reset", width=5,height=1, command= self.reset, font=("Times 12 bold"), bg = ("white")).grid(row=0, column=3)#pack(side = LEFT)
+        
+root = Tk()
+root.configure(bg='#222222')
+root.geometry('1280x720')
+root.title("Your study spacce")
+a = stopwatch(root)
+
+root.mainloop()      
