@@ -2,14 +2,35 @@ from tkinter import *
 import json
 from datetime import datetime
 import pip._vendor.requests as requests
+import time
 
 #Initialize Window
- 
+
 root = Tk()
 root.geometry("400x400") #size of the window by default
 root.configure(bg='#222222')
 #title of our window
-root.title("Weather App - AskPython.com")
+root.title("Your study spacce")
+
+def start():
+    global is_running
+    global start_time
+    if not is_running:
+        is_running = True
+        start_time = time.time()
+        update_time()
+ 
+# Stop the stopwatch
+def stop():
+    global is_running
+    is_running = False
+ 
+# Update the elapsed time
+def update_time():
+    if is_running:
+        elapsed_time = time.time() - start_time
+        time_label.config(text="{:.2f}".format(elapsed_time))
+        time_label.after(50, update_time)
 
 def make_draggable(widget):
     widget.bind("<Button-1>", on_drag_start)
@@ -92,23 +113,40 @@ def showWeather():
  
 #Frontend part of code - Interface
 
-frame = Frame(root, bd=4, bg="grey")
-frame.place(x=10, y=10)
-make_draggable(frame)
+weather_frame = Frame(root, bd=4, bg="white")
+weather_frame.place(x=10, y=10)
+make_draggable(weather_frame)
+
+stopwatch_frame = Frame(root, bd=4, bg = 'white')
+make_draggable(stopwatch_frame)
+
 font_tuple_city_head = ("Courier New", 12, "bold")
 font_tuple_inp_city = ("Courier New", 14, "bold")
 
-city_head= Label(frame, text = 'Enter City Name', font = font_tuple_city_head).pack(pady=10) #to generate label heading
+time_label = Label(stopwatch_frame, text="0.00", font=("Helvetica", 48))
+time_label.place(x=110, y=190)
+ 
+# Create the start and stop buttons
+start_button = Button(stopwatch_frame, text="Start", width=10, command=start)
+start_button.place(x=10, y=10)
+stop_button = Button(stopwatch_frame, text="Stop", width=10, command=stop)
+stop_button.place(x=260, y=10)
+ 
+# Flag to track whether the stopwatch is running
+is_running = False
 
-inp_city = Entry(frame, textvariable = city_value,  width = 24, font= font_tuple_inp_city).pack()
+city_head= Label(weather_frame, text = 'Enter City Name', font = font_tuple_city_head).pack(pady=10) #to generate label heading
 
-Button(frame, command = showWeather, text = "Check Weather", font="Arial 10", bg='lightblue', fg='black', activebackground="teal", padx=5, pady=5 ).pack(pady= 20)
+inp_city = Entry(weather_frame, textvariable = city_value,  width = 24, font= font_tuple_inp_city).pack()
+
+Button(weather_frame, command = showWeather, text = "Check Weather", font="Arial 10", bg='lightblue', fg='black', activebackground="teal", padx=5, pady=5 ).pack(pady= 20)
  
 #to show output
  
-weather_now = Label(frame, text = "The Weather is:", font = 'arial 12 bold').pack(pady=10)
+weather_now = Label(weather_frame, text = "The Weather is:", font = 'arial 12 bold').pack(pady=10)
  
-tfield = Text(frame, width=46, height=10)
+tfield = Text(weather_frame, width=46, height=10)
 tfield.pack()
- 
+stopwatch_frame.pack()
+
 root.mainloop()
